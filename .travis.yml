@@ -18,6 +18,8 @@ addons:
       - mpich
       - libmpich-dev
       - libpetsc3.6
+      - libpetsc3.6.2-dev
+      - libpetsc3.6.2-dbg
 
 env:
   global:
@@ -63,6 +65,8 @@ jobs:
             - mpich
             - libmpich-dev
             - libpetsc3.6
+            - libpetsc3.6.2-dev
+            - libpetsc3.6.2-dbg
 
       env:
         - C_COMPILER="gcc-4.9"
@@ -87,6 +91,8 @@ jobs:
             - mpich
             - libmpich-dev
             - libpetsc3.6
+            - libpetsc3.6.2-dev
+            - libpetsc3.6.2-dbg
 
       env:
         - C_COMPILER="gcc-6"
@@ -112,6 +118,8 @@ jobs:
             - mpich
             - libmpich-dev
             - libpetsc3.6
+            - libpetsc3.6.2-dev
+            - libpetsc3.6.2-dbg
 
       env:
         - C_COMPILER="clang-3.7"
@@ -137,6 +145,8 @@ jobs:
             - mpich
             - libmpich-dev
             - libpetsc3.6
+            - libpetsc3.6.2-dev
+            - libpetsc3.6.2-dbg
 
       env:
         - C_COMPILER="clang-5.0"
@@ -159,6 +169,8 @@ jobs:
             - mpich
             - libmpich-dev
             - libpetsc3.6
+            - libpetsc3.6.2-dev
+            - libpetsc3.6.2-dbg
         coverity_scan:
           project:
             name: optimad/bitpit

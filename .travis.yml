@@ -221,14 +221,14 @@ before_script:
       mkdir build;
       cd build;
       cmake
-        -DCMAKE_C_COMPILER=${C_COMPILER} \
-        -DCMAKE_CXX_COMPILER=${CXX_COMPILER} \
-        -DCMAKE_Fortran_COMPILER=${Fortran_COMPILER} \
-        -DPETSC_DIR=/usr/lib \
-        -DPETSC_ARCH=x86_64-linux-gnu \
-        -DCMAKE_BUILD_TYPE=${BUILD_TYPE} \
-        -DENABLE_MPI=${ENABLE_MPI} \
-        -DVERBOSE_MAKE=True \
+        -DCMAKE_C_COMPILER=${C_COMPILER}
+        -DCMAKE_CXX_COMPILER=${CXX_COMPILER}
+        -DCMAKE_Fortran_COMPILER=${Fortran_COMPILER}
+        -DPETSC_DIR=/usr/lib
+        -DPETSC_ARCH=x86_64-linux-gnu
+        -DCMAKE_BUILD_TYPE=${BUILD_TYPE}
+        -DENABLE_MPI=${ENABLE_MPI}
+        -DVERBOSE_MAKE=True
         ..;
     fi
 

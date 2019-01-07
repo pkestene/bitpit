@@ -218,6 +218,8 @@ before_install:
 
 before_script:
   - if [ ${TRAVIS_BRANCH} != "coverity" ]; then
+      ls /usr/lib;
+      ls /usr/lib/pet*;
       mkdir build;
       cd build;
       cmake

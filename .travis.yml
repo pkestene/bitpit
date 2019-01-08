@@ -218,7 +218,7 @@ before_install:
 
 before_script:
   - if [ ${TRAVIS_BRANCH} != "coverity" ]; then
-      ls /usr/lib/petscdir/3.6.2;
+      ls /usr/lib/petscdir/3.6.2/*;
       mkdir build;
       cd build;
       cmake

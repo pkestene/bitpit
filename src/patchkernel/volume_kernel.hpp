@@ -45,9 +45,9 @@ public:
         virtual std::array<double,3> evalInterfaceNormal(const long &id)const = 0;
 
 protected:
-	VolumeKernel(bool epxert);
-	VolumeKernel(const int &dimension, bool epxert);
-	VolumeKernel(const int &id, const int &dimension, bool epxert);
+	VolumeKernel(bool expert);
+	VolumeKernel(const int &dimension, bool expert);
+	VolumeKernel(const int &id, const int &dimension, bool expert);
 
 };
 

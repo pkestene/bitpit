@@ -152,7 +152,7 @@ enum class VTKRectilinearField {
 class VTKTypes{
 
     private:
-        static std::unordered_map<std::type_index, VTKDataType> m_types;  /**< map conatining registered data types */
+        static std::unordered_map<std::type_index, VTKDataType> m_types;  /**< map containing registered data types */
 
     public:
         static uint8_t          sizeOfType( const VTKDataType & type );

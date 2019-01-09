@@ -33,7 +33,7 @@ namespace bitpit {
 	\brief The VolumeKernel class provides an interface for defining
 	volume patches.
 
-	VolumeKernel is the base class for defining voulme patches.
+	VolumeKernel is the base class for defining volume patches.
 */
 
 /*!

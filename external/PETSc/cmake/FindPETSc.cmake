@@ -22,7 +22,7 @@
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 #
 
-cmake_policy(VERSION 3.3)
+cmake_policy(VERSION 2.8)
 
 set(PETSC_VALID_COMPONENTS
   C
@@ -30,7 +30,8 @@ set(PETSC_VALID_COMPONENTS
 
 if(NOT PETSc_FIND_COMPONENTS)
   get_property (_enabled_langs GLOBAL PROPERTY ENABLED_LANGUAGES)
-  if ("C" IN_LIST _enabled_langs)
+  list (FIND _enabled_langs "C" _c_lang_index)
+  if (${_c_lang_index} GREATER -1)
     set(PETSC_LANGUAGE_BINDINGS "C")
   else ()
     set(PETSC_LANGUAGE_BINDINGS "CXX")

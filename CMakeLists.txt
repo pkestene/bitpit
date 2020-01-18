@@ -127,19 +127,14 @@ endfunction()
 if (ENABLE_MPI)
     find_package(MPI)
 
-    include_directories("${MPI_INCLUDE_PATH}")
-
-    if(MPI_C_COMPILE_FLAGS)
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${MPI_C_COMPILE_FLAGS}")
+    if(MPI_CXX_FOUND)
+      message(STATUS "MPI support found")
+      message(STATUS "MPI compile flags   : ${MPI_CXX_COMPILE_FLAGS}")
+      message(STATUS "MPI include path    : ${MPI_CXX_INCLUDE_PATH}")
+      message(STATUS "MPI LINK flags path : ${MPI_CXX_LINK_FLAGS}")
+      message(STATUS "MPI libraries       : ${MPI_CXX_LIBRARIES}")
     endif()
 
-    if(MPI_CXX_COMPILE_FLAGS)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MPI_CXX_COMPILE_FLAGS}")
-    endif()
-
-    if(MPI_CXX_LINK_FLAGS)
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${MPI_CXX_LINK_FLAGS}")
-    endif()
 endif()
 
 #------------------------------------------------------------------------------------#
@@ -530,8 +525,8 @@ endif()
 
 if (ENABLE_MPI)
     list (APPEND BITPIT_EXTERNAL_DEPENDENCIES "MPI")
-    list (APPEND BITPIT_EXTERNAL_LIBRARIES "${MPI_CXX_LIBRARIES}")
-    list (APPEND BITPIT_EXTERNAL_INCLUDE_DIRS "${MPI_CXX_INCLUDE_DIRS}" )
+    list (APPEND BITPIT_EXTERNAL_LIBRARIES MPI::MPI_CXX)
+    #list (APPEND BITPIT_EXTERNAL_INCLUDE_DIRS "${MPI_CXX_INCLUDE_DIRS}" )
 endif()
 
 #------------------------------------------------------------------------------------#

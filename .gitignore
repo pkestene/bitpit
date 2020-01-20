@@ -10,3 +10,4 @@ CMakeFiles/
 .settings/
 .DS_Store
 .vscode
+.ccls-cache

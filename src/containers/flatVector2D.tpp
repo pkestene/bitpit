@@ -48,8 +48,7 @@ namespace bitpit{
 template<class T>
 bitpit::OBinaryStream& operator<<(bitpit::OBinaryStream &buffer, const bitpit::FlatVector2D<T> &vector)
 {
-    buffer << vector.m_index;
-    buffer << vector.m_v;
+    vector.toStream(buffer);
 
     return buffer;
 }
@@ -65,8 +64,7 @@ bitpit::OBinaryStream& operator<<(bitpit::OBinaryStream &buffer, const bitpit::F
 template<class T>
 bitpit::IBinaryStream& operator>>(bitpit::IBinaryStream &buffer, bitpit::FlatVector2D<T> &vector)
 {
-    buffer >> vector.m_index;
-    buffer >> vector.m_v;
+    vector.fromStream(buffer);
 
     return buffer;
 }
@@ -398,6 +396,32 @@ bool FlatVector2D<T>::empty() const
 {
     return size() == 0;
 }
+
+/*!
+    Write to a stream
+
+    \result void.
+*/
+template <class T>
+void FlatVector2D<T>::toStream(bitpit::OBinaryStream &buffer) const
+{
+    buffer << m_index;
+    buffer << m_v;
+
+} // FlatVector2D<T>::toStream
+
+/*!
+    Read from a stream
+
+    \result void.
+*/
+template <class T>
+void FlatVector2D<T>::fromStream(bitpit::IBinaryStream &buffer)
+{
+    buffer >> m_index;
+    buffer >> m_v;
+
+} // FlatVector2D<T>::fromStream
 
 /*!
     Clears content.

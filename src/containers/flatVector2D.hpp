@@ -61,10 +61,10 @@ template <class T>
 class FlatVector2D
 {
 
-template<class U>
-friend bitpit::OBinaryStream& (::operator<<) (bitpit::OBinaryStream &buffer, const FlatVector2D<U> &vector);
-template<class U>
-friend bitpit::IBinaryStream& (::operator>>) (bitpit::IBinaryStream &buffer, FlatVector2D<U> &vector);
+// template<class U>
+// friend bitpit::OBinaryStream& (::operator<<) (bitpit::OBinaryStream &buffer, const FlatVector2D<U> &vector);
+// template<class U>
+// friend bitpit::IBinaryStream& (::operator>>) (bitpit::IBinaryStream &buffer, FlatVector2D<U> &vector);
 
 public:
     FlatVector2D(bool initialize = true);
@@ -105,6 +105,9 @@ public:
     bool operator==(const FlatVector2D& rhs) const;
     void fill(T &value);
     bool empty() const;
+
+    void toStream(bitpit::OBinaryStream &buffer) const;
+    void fromStream(bitpit::IBinaryStream &buffer);
 
     void clear(bool release = true);
     void clearItems(bool release = true);

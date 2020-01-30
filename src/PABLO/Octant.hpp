@@ -98,8 +98,11 @@ class Octant{
     friend class ParaTree;
     friend class Global;
 
-    friend bitpit::OBinaryStream& (::operator<<) (bitpit::OBinaryStream& buf, const Octant& octant);
-    friend bitpit::IBinaryStream& (::operator>>) (bitpit::IBinaryStream& buf, Octant& octant);
+    //friend bitpit::OBinaryStream& (::operator<<) (bitpit::OBinaryStream& buf, const Octant& octant);
+    //friend bitpit::IBinaryStream& (::operator>>) (bitpit::IBinaryStream& buf, Octant& octant);
+  public:
+    void toStream(OBinaryStream &buffer) const;
+    void fromStream(IBinaryStream &buffer);
 
 
     // =================================================================================== //

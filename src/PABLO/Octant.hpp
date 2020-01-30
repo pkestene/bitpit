@@ -209,7 +209,7 @@ public:
     bool        getIsGhost() const;
     int         getGhostLayer() const;
     bool        getBalance() const;
-protected:
+//protected:
     void        setBound(uint8_t face);
     void        setMarker(int8_t marker);
     void        setBalance(bool balance);

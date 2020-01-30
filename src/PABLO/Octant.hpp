@@ -171,20 +171,19 @@ private:
 public:
 	static unsigned int getBinarySize();
 
+private:
+	// =================================================================================== //
+	// PRIVATE METHODS
+	// =================================================================================== //
+	void initialize();
+	void initialize(uint8_t dim, uint8_t level, bool bound);
+
 public:
 	// =================================================================================== //
 	// PUBLIC METHODS
 	// =================================================================================== //
 	uint64_t		computeFatherMorton() const;
 	u32array3		computeFatherCoordinates() const;
-
-private:
-	// =================================================================================== //
-	// METHODS
-	// =================================================================================== //
-
-	void initialize();
-	void initialize(uint8_t dim, uint8_t level, bool bound);
 
 	// =================================================================================== //
 	// BASIC GET/SET METHODS
@@ -199,7 +198,6 @@ private:
 	int8_t		getMarker() const;
 	bool		getBound(uint8_t face) const;
 	bool		getBound() const;
-	void		setBound(uint8_t face);
 	bool		getPbound(uint8_t face) const;
 	bool		getPbound() const;
 	bool		getIsNewR() const;
@@ -207,6 +205,8 @@ private:
 	bool		getIsGhost() const;
 	int			getGhostLayer() const;
 	bool		getBalance() const;
+protected:
+	void		setBound(uint8_t face);
 	void		setMarker(int8_t marker);
 	void		setBalance(bool balance);
 	void		setLevel(uint8_t level);
@@ -216,6 +216,7 @@ private:
 	// =================================================================================== //
 	// OTHER GET/SET METHODS
 	// =================================================================================== //
+public:
 	uint32_t		getLogicalSize() const;
 	uint64_t		getLogicalArea() const;
 	uint64_t		getLogicalVolume() const;
@@ -237,6 +238,7 @@ private:
 	Octant					buildLastDesc() const;
 	Octant					buildFather() const;
 	std::vector< Octant >	buildChildren() const;
+protected:
 	void computeHalfSizeMortons(uint8_t iface, uint32_t *nMortons, std::vector<uint64_t> *mortons) const;
 	void computeMinSizeMortons(uint8_t iface, uint8_t maxdepth, uint32_t *nMortons, std::vector<uint64_t> *mortons) const;
 	void computeFaceVirtualMortons(uint8_t iface, uint8_t maxdepth, uint32_t *nMortons, std::vector<uint64_t> *mortons) const;

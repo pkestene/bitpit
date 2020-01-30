@@ -42,27 +42,8 @@
  */
 bitpit::IBinaryStream& operator>>(bitpit::IBinaryStream &buffer, bitpit::Octant &octant)
 {
-    uint8_t dimensions;
-    buffer >> dimensions;
 
-    uint8_t level;
-    buffer >> level;
-
-    octant.initialize(dimensions, level, true);
-
-    buffer >> octant.m_x;
-    buffer >> octant.m_y;
-    buffer >> octant.m_z;
-
-    buffer >> octant.m_marker;
-
-    buffer >> octant.m_ghost;
-
-    for(int i = 0; i < bitpit::Octant::INFO_ITEM_COUNT; ++i){
-        bool value;
-        buffer >> value;
-        octant.m_info[i] = value;
-    }
+    octant.fromStream(buffer);
 
     return buffer;
 }
@@ -77,20 +58,7 @@ bitpit::IBinaryStream& operator>>(bitpit::IBinaryStream &buffer, bitpit::Octant 
  */
 bitpit::OBinaryStream& operator<<(bitpit::OBinaryStream  &buffer, const bitpit::Octant &octant)
 {
-    buffer << octant.m_dim;
-    buffer << octant.m_level;
-
-    buffer << octant.m_x;
-    buffer << octant.m_y;
-    buffer << octant.m_z;
-
-    buffer << octant.m_marker;
-
-    buffer << octant.m_ghost;
-
-    for(int i = 0; i < bitpit::Octant::INFO_ITEM_COUNT; ++i){
-        buffer << (bool) octant.m_info[i];
-    }
+    octant.toStream(buffer);
 
     return buffer;
 }
@@ -105,6 +73,57 @@ using namespace std;
 // =================================================================================== //
 // CLASS IMPLEMENTATION                                                                    //
 // =================================================================================== //
+
+/*! Write to a stream.
+ */
+void Octant::toStream(OBinaryStream &buffer) const 
+{
+
+    buffer << m_dim;
+    buffer << m_level;
+
+    buffer << m_x;
+    buffer << m_y;
+    buffer << m_z;
+
+    buffer << m_marker;
+
+    buffer << m_ghost;
+
+    for(int i = 0; i < bitpit::Octant::INFO_ITEM_COUNT; ++i){
+        buffer << (bool) m_info[i];
+    }
+
+}; // Octant::toStream
+
+/*! Read from a stream.
+ */
+void Octant::fromStream(IBinaryStream &buffer) 
+{
+
+    uint8_t dimensions;
+    buffer >> dimensions;
+
+    uint8_t level;
+    buffer >> level;
+
+    initialize(dimensions, level, true);
+
+    buffer >> m_x;
+    buffer >> m_y;
+    buffer >> m_z;
+
+    buffer >> m_marker;
+
+    buffer >> m_ghost;
+
+    for(int i = 0; i < bitpit::Octant::INFO_ITEM_COUNT; ++i) {
+        bool value;
+        buffer >> value;
+        m_info[i] = value;
+    }
+
+}; // Octant::fromStream
 
 // =================================================================================== //
 // STATIC AND CONSTANT

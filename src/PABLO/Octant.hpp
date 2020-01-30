@@ -104,7 +104,6 @@ class Octant{
     void toStream(OBinaryStream &buffer) const;
     void fromStream(IBinaryStream &buffer);
 
-
     // =================================================================================== //
     // STATIC MEMBERS
     // =================================================================================== //

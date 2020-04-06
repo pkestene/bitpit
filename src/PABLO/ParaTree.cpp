@@ -1294,7 +1294,7 @@ namespace bitpit {
      */
     double
       ParaTree::getXghost(uint32_t idx) const {
-      return m_trans.mapX(m_octree.m_ghosts[idx].getX());
+      return m_trans.mapX(m_octree.m_ghosts[idx].getLogicalX());
     }
 
     /*! Get the coordinates of a ghost octant, i.e. the coordinates of its node 0.
@@ -1303,7 +1303,7 @@ namespace bitpit {
      */
     double
       ParaTree::getYghost(uint32_t idx) const {
-      return m_trans.mapY(m_octree.m_ghosts[idx].getY());
+      return m_trans.mapY(m_octree.m_ghosts[idx].getLogicalY());
     }
 
     /*! Get the coordinates of a ghost octant, i.e. the coordinates of its node 0.
@@ -1312,7 +1312,7 @@ namespace bitpit {
      */
     double
       ParaTree::getZghost(uint32_t idx) const {
-      return m_trans.mapZ(m_octree.m_ghosts[idx].getZ());
+      return m_trans.mapZ(m_octree.m_ghosts[idx].getLogicalZ());
     }
     
     /*! Get the size of an octant, i.e. the side length.
@@ -1330,7 +1330,7 @@ namespace bitpit {
      */
     double
       ParaTree::getSizeGhost(uint32_t idx) const {
-      return m_trans.mapSize(m_octree.m_ghosts[idx].getSize());
+      return m_trans.mapSize(m_octree.m_ghosts[idx].getLogicalSize());
     }
 
     /*! Get the area of an octant (for 2D case the same value of getSize).
@@ -1380,7 +1380,7 @@ namespace bitpit {
     darray3
     ParaTree::getCenterGhost(uint32_t idx) const {
       darray3 center;
-      darray3 center_ = m_octree.m_ghosts[idx].getCenter();
+      darray3 center_ = m_octree.m_ghosts[idx].getLogicalCenter();
       m_trans.mapCenter(center_, center);
       return center;
     }

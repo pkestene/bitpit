@@ -5407,22 +5407,38 @@ namespace bitpit {
             // Virtual Edge Neighbors
             for(uint8_t e = 0; e < m_treeConstants->nEdges; ++e){
                 octant.computeEdgeVirtualMortons(e, m_maxDepth, m_octree.m_balanceCodim, m_treeConstants->edgeFace, &nVirtualNeighbors, &virtualNeighbors);
+
+                bool isEdgePbound = false;
                 if(nVirtualNeighbors > 0){
                     uint32_t maxDelta = nVirtualNeighbors/2;
                     for(uint32_t ee = 0; ee <= maxDelta; ++ee){
                         int neighProcFirst = findOwner(virtualNeighbors[ee]);
                         if (neighProcFirst != m_rank) {
                             neighProcs.insert(neighProcFirst);
+                            isEdgePbound = true;
                         }
 
                         int neighProcLast = findOwner(virtualNeighbors[nVirtualNeighbors - 1- ee]);
                         if (neighProcLast != m_rank) {
                             neighProcs.insert(neighProcLast);
+                            isEdgePbound = true;
                         }
 
                         //					//TODO debug
                         //					if (abs(pBegin-pEnd) <= 1) ee = maxDelta + 1;
                     }
+                }
+                else if(m_octree.isEdgePeriodic(&octant, e)){
+                    Octant periodicNeighbor = octant.computeEdgePeriodicOctant(e);
+                    int neighProc = findOwner(periodicNeighbor.computeMorton());
+                    if(neighProc != m_rank){
+                        neighProcs.insert(neighProc);
+                        isEdgePbound = true;
+                    }
+                }
+
+                for (int edgeFace : m_treeConstants->edgeFace[e]) {
+                    octant.setPbound(edgeFace, isEdgePbound);
                 }
             }
 
@@ -5431,11 +5447,26 @@ namespace bitpit {
                 bool hasVirtualNeighbour;
                 uint64_t virtualNeighbor;
                 octant.computeNodeVirtualMorton(c, m_maxDepth,m_treeConstants->nodeFace, &hasVirtualNeighbour, &virtualNeighbor);
+
+                bool isNodePbound = false;
                 if(hasVirtualNeighbour){
                     int neighProc = findOwner(virtualNeighbor);
                     if (neighProc != m_rank) {
                         neighProcs.insert(neighProc);
+                        isNodePbound = true;
                     }
+                }
+                else if(m_octree.isNodePeriodic(&octant, c)){
+                    Octant periodicNeighbor = octant.computeNodePeriodicOctant(c);
+                    int neighProc = findOwner(periodicNeighbor.computeMorton());
+                    if(neighProc != m_rank){
+                        neighProcs.insert(neighProc);
+                        isNodePbound = true;
+                    }
+                }
+
+                for (int nodeFace : m_treeConstants->nodeFace[c]) {
+                    octant.setPbound(nodeFace, isNodePbound);
                 }
             }
 

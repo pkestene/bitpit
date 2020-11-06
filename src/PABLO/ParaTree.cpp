@@ -5407,8 +5407,6 @@ namespace bitpit {
             // Virtual Edge Neighbors
             for(uint8_t e = 0; e < m_treeConstants->nEdges; ++e){
                 octant.computeEdgeVirtualMortons(e, m_maxDepth, m_octree.m_balanceCodim, m_treeConstants->edgeFace, &nVirtualNeighbors, &virtualNeighbors);
-
-                bool isEdgePbound = false;
                 if(nVirtualNeighbors > 0){
                     uint32_t maxDelta = nVirtualNeighbors/2;
                     for(uint32_t ee = 0; ee <= maxDelta; ++ee){
@@ -5431,12 +5429,19 @@ namespace bitpit {
                     int neighProc = findOwner(periodicNeighbor.computeMorton());
                     if(neighProc != m_rank){
                         neighProcs.insert(neighProc);
-                        isEdgePbound = true;
-                    }
-                }
 
-                for (int edgeFace : m_treeConstants->edgeFace[e]) {
-                    octant.setPbound(edgeFace, isEdgePbound);
+                        for (int edgeFace : m_treeConstants->edgeFace[e]) {
+                            if (octant.getPbound(edgeFace)) {
+                                continue;
+                            } else if (!octant.getBound(edgeFace)) {
+                                continue;
+                            } else if (m_octree.isPeriodic(&octant, edgeFace)) {
+                                continue;
+                            }
+
+                            octant.setPbound(edgeFace, true);
+                        }
+                    }
                 }
             }
 
@@ -5445,8 +5450,6 @@ namespace bitpit {
                 bool hasVirtualNeighbour;
                 uint64_t virtualNeighbor;
                 octant.computeNodeVirtualMorton(c, m_maxDepth,m_treeConstants->nodeFace, &hasVirtualNeighbour, &virtualNeighbor);
-
-                bool isNodePbound = false;
                 if(hasVirtualNeighbour){
                     int neighProc = findOwner(virtualNeighbor);
                     if (neighProc != m_rank) {
@@ -5458,12 +5461,19 @@ namespace bitpit {
                     int neighProc = findOwner(periodicNeighbor.computeMorton());
                     if(neighProc != m_rank){
                         neighProcs.insert(neighProc);
-                        isNodePbound = true;
-                    }
-                }
 
-                for (int nodeFace : m_treeConstants->nodeFace[c]) {
-                    octant.setPbound(nodeFace, isNodePbound);
+                        for (int nodeFace : m_treeConstants->nodeFace[c]) {
+                            if (octant.getPbound(nodeFace)) {
+                                continue;
+                            } else if (!octant.getBound(nodeFace)) {
+                                continue;
+                            } else if (m_octree.isPeriodic(&octant, nodeFace)) {
+                                continue;
+                            }
+
+                            octant.setPbound(nodeFace, true);
+                        }
+                    }
                 }
             }
 
